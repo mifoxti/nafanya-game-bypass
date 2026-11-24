@@ -1,0 +1,57 @@
+<Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Добавить из запущенных процессов" Width="880" Height="650" MinWidth="740" MinHeight="520" WindowStartupLocation="CenterOwner">
+  <Window.Resources><!--ThemeResources--></Window.Resources>
+  <Border CornerRadius="24" Background="#EE121B30" BorderBrush="{StaticResource GlassEdge}" BorderThickness="1">
+    <Grid Margin="27,18,27,24">
+      <Grid.RowDefinitions><RowDefinition Height="45"/><RowDefinition Height="74"/><RowDefinition Height="58"/><RowDefinition Height="*"/><RowDefinition Height="63"/></Grid.RowDefinitions>
+      <Grid x:Name="TitleBar">
+        <TextBlock Text="ДОБАВИТЬ ИГРУ" FontSize="10" FontWeight="SemiBold" Foreground="{StaticResource SecondaryText}" VerticalAlignment="Center"/>
+        <Button x:Name="CloseWindow" Style="{StaticResource WindowButton}" Content="&#xE8BB;" HorizontalAlignment="Right" AutomationProperties.Name="Закрыть"/>
+      </Grid>
+      <StackPanel Grid.Row="1" Margin="0,9,0,0">
+        <TextBlock Text="Уже запущена? Найдём." FontWeight="SemiBold" FontSize="25"/>
+        <TextBlock Text="Выбери игровой процесс — путь подставится автоматически." Foreground="{StaticResource SecondaryText}" Margin="0,8,0,0"/>
+      </StackPanel>
+      <Grid Grid.Row="2" Margin="0,0,0,13">
+        <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="48"/></Grid.ColumnDefinitions>
+        <TextBox x:Name="Search" Style="{StaticResource GlassInput}" Padding="39,11,14,11" AutomationProperties.Name="Поиск процесса по имени или пути"/>
+        <TextBlock Text="&#xE721;" FontFamily="Segoe Fluent Icons" Foreground="{StaticResource FaintText}" Margin="14,0,0,0"
+                   VerticalAlignment="Center" IsHitTestVisible="False"/>
+        <TextBlock x:Name="SearchHint" Text="Название игры или процесса" Foreground="{StaticResource FaintText}" Margin="40,0,0,0"
+                   VerticalAlignment="Center" IsHitTestVisible="False"/>
+        <Button Grid.Column="1" x:Name="RefreshProcesses" Style="{StaticResource QuietButton}" Margin="8,0,0,0" ToolTip="Обновить процессы" AutomationProperties.Name="Обновить процессы">
+          <TextBlock Text="&#xE72C;" FontFamily="Segoe Fluent Icons" Foreground="{StaticResource SecondaryText}"/>
+        </Button>
+      </Grid>
+      <ListBox Grid.Row="3" x:Name="Processes" Style="{StaticResource GlassList}" ItemContainerStyle="{StaticResource ProcessRow}"
+               SelectionMode="Extended" AutomationProperties.Name="Запущенные процессы">
+        <ListBox.ItemTemplate>
+          <DataTemplate>
+            <Grid>
+              <Grid.ColumnDefinitions><ColumnDefinition Width="43"/><ColumnDefinition Width="*"/><ColumnDefinition Width="100"/></Grid.ColumnDefinitions>
+              <Border Width="31" Height="31" CornerRadius="9" Background="#214B638B" BorderBrush="#244E6C9C" BorderThickness="1">
+                <TextBlock Text="&#xE7F4;" FontFamily="Segoe Fluent Icons" FontSize="13" Foreground="#B5C7E7"
+                           HorizontalAlignment="Center" VerticalAlignment="Center"/>
+              </Border>
+              <StackPanel Grid.Column="1" Margin="8,0,20,0">
+                <TextBlock Text="{Binding Name}" Foreground="{StaticResource Text}" FontWeight="Medium" TextTrimming="CharacterEllipsis"/>
+                <TextBlock Text="{Binding Path}" Foreground="{StaticResource FaintText}" FontSize="11" Margin="0,4,0,0"
+                           TextTrimming="CharacterEllipsis" ToolTip="{Binding Path}"/>
+              </StackPanel>
+              <TextBlock Grid.Column="2" Text="{Binding PidLabel}" Foreground="{StaticResource FaintText}" FontSize="10"
+                         HorizontalAlignment="Right" VerticalAlignment="Center" TextTrimming="CharacterEllipsis"/>
+            </Grid>
+          </DataTemplate>
+        </ListBox.ItemTemplate>
+      </ListBox>
+      <Grid Grid.Row="4" Margin="0,16,0,0">
+        <TextBlock x:Name="Count" Foreground="{StaticResource FaintText}" FontSize="11" VerticalAlignment="Center"/>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+          <Button x:Name="Cancel" Style="{StaticResource QuietButton}" Content="Отмена" Margin="0,0,12,0"/>
+          <Button x:Name="Choose" Style="{StaticResource PrimaryButton}" Content="Добавить выбранные" IsEnabled="False"/>
+        </StackPanel>
+      </Grid>
+    </Grid>
+  </Border>
+</Window>
